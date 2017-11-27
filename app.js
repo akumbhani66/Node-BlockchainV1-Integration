@@ -6,17 +6,17 @@ app.get('/wallets/new', function (req, res) {
   console.log("creating wallet...");
   var options = {
     hd: true,
-    apiHost:"http://127.0.0.1:3000",
-    email: "ashvin.kumbhani@bacancytechnology.com",
+    apiHost:HOST,
+    email: EMAIL,
   }
 
-  MyWallet.create("Pa$$word1!",
-    'API_KEY',
+  MyWallet.create(PASSWORD,
+    API_KEY,
     options,
     ).then(function (response) {
       res.status(200).send(`<u>Wallet Info.</u></br>` +
         `GUID(Wallet Id): ` + response.guid + `</br>` +
-        `PASSWORD : Pa$$word1!` +
+        `PASSWORD : PASSWORD` +
         `</br><a href='https://blockchain.info/wallet/#/login'>Click here to login.</a>`
       )
     }
@@ -26,36 +26,33 @@ app.get('/wallets/new', function (req, res) {
 app.get('/wallet/enableHD', function(req, res) {
   var options = {
     apiCode: 'API_KEY',
-    apiHost: 'http://127.0.0.1:3000'
+    apiHost: HOST
   }
-  var wallet = new MyWallet('bcbaa8cb-eb35-4483-bfdb-9dc2e6f6788b', 'Pa$$word1!', options)
+  var wallet = new MyWallet(WALLET_ID, WALLET_PASSWORD, options)
   wallet.enableHD().then(function (response) {
-    console.log(">>>>", response);
     res.status(200).send(">>>"+ response);
   })
 })
 
 app.get('/wallet/list/HDaccounts', function(req, res) {
   var options = {
-    apiCode: 'API_KEY',
-    apiHost: 'http://127.0.0.1:3000'
+    apiCode: API_KEY,
+    apiHost: HOST
   }
-  var wallet = new MyWallet('bcbaa8cb-eb35-4483-bfdb-9dc2e6f6788b', 'Pa$$word1!', options)
+  var wallet = new MyWallet(WALLET_ID, WALLET_PASSWORD, options)
   wallet.listAccounts().then(function (response) {
-    console.log(">>>>", response);
     res.status(200).send(">>>"+ response);
   })
 })
 
 app.get('/wallets/getBalance', function (req, res) {
   var options = {
-    apiCode: 'API_KEY',
-    apiHost: 'http://127.0.0.1:3000',
+    apiCode: API_KEY,
+    apiHost: HOST,
   }
-  var wallet = new MyWallet('bcbaa8cb-eb35-4483-bfdb-9dc2e6f6788b', 'Pa$$word1!', options)
+  var wallet = new MyWallet(WALLET_ID, WALLET_PASSWORD, options)
   wallet.getBalance()
           .then(function (response) {
-            console.log('My balance is %d!', response.balance);
             res.status(200).send("Balance is:" + response.balance)
           })
 })
@@ -68,24 +65,23 @@ app.get('/wallets/addresses/createNewAddress', function(req, res) {
   }
 
   var options2 = {
-    apiCode: 'API_KEY',
-    apiHost: 'http://127.0.0.1:3000',
+     apiCode: API_KEY,
+     apiHost: HOST,
   }
 
-  var wallet = new MyWallet('bcbaa8cb-eb35-4483-bfdb-9dc2e6f6788b', 'Pa$$word1!', options2)
+  var wallet = new MyWallet(WALLET_ID, WALLET_PASSWORD, options2)
   wallet.newAddress(options).then(function (response) {
-    console.log(">>>>", response);
     res.status(200).send(">>>"+ response);
   })
 })
 
 app.get('/wallet/allAddress', function(req, res) {
   var options = {
-    apiCode: 'API_KEY',
-    apiHost: 'http://127.0.0.1:3000'
+    apiCode: API_KEY,
+    apiHost: HOST,
   }
 
-  var wallet = new MyWallet('bcbaa8cb-eb35-4483-bfdb-9dc2e6f6788b', 'Pa$$word1!', options)
+  var wallet = new MyWallet(WALLET_ID, WALLET_PASSWORD, options)
   wallet.listAddresses().then(function (response) {
     res.status(200).send(">>>"+ JSON.stringify(response));
   })
